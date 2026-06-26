@@ -45,7 +45,7 @@ static class StringTask {
     }
 }
 
-4. Obtaining Hexadecimal Characters   ***
+4. Obtaining Hexadecimal Characters
 public static char convertToHexChar(boolean[] bits) {
     int value = 0;
     for(int i = 0; i< bits.length; i++){
@@ -167,7 +167,7 @@ public static void sort(IntTracker[] arr) {
    }
 }
 
-12. Insertion sort  ***
+12. Insertion sort
 public static void sort(IntTracker[] arr) {
     for (int i = 1; i < arr.length; i++) {
         int j = i;
@@ -407,7 +407,7 @@ public static int[][] mergeIntervals(int[][] intervals) {
     return res.toArray(new int[res.size()][]);
 }
 
-28. Intersection of Two Arrays   ***
+28. Intersection of Two Arrays
 public static int[] intersection(int[] arr1, int[] arr2) {
     Set<Integer> res = new HashSet<>();
     for(int i = 0; i< arr1.length-1; i++){
@@ -461,7 +461,7 @@ static class Task {
     }
 }
 
-30. Caesar Cypher Encryption   ***
+30. Caesar Cypher Encryption
 static class Task {
     public String encrypt(String s, int shift) {
         String res = "";
@@ -523,7 +523,7 @@ public static int romanToInt(String s) {
     return ans;
 }
 
-34. Text Compression(Run-Length Encoding)   ***
+34. Text Compression(Run-Length Encoding)
 static class Task {
     public int compress(char[] chars) {
 	String res = "";
@@ -630,10 +630,10 @@ public static int getDepth(TreeNode root, int target) {
 }
 
 43. Root-to-leaf Path Sum
-public static boolean hasPathSum(TreeNode root, int targetSum) {
+public static boolean rootToLeafSum(TreeNode root, int targetSum) {
     if(root == null) return false;
     if(root.left == null && root.right == null) return root.val == targetSum;
-    return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
+    return rootToLeafSum(root.left, targetSum - root.val) || rootToLeafSum(root.right, targetSum - root.val);
 }
 
 44. Restoration of a Unique Travel Route
