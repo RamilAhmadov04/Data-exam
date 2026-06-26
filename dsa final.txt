@@ -1,0 +1,648 @@
+1. Checking Strong Password Criteria
+public static boolean isStrongPassword(String password) {
+    boolean upper = false;
+    boolean digit = false;
+    for(char c : password.toCharArray()){
+    	if(Character.isUpperCase(c)) upper = true;
+        if(Character.isDigit(c)) digit = true;
+    }
+    if(digit && upper && password.length()>=8) return true;
+    return false;
+}
+
+2. Building the Queue Structure
+static class MyQueue {
+    int[] q = new int[1000];
+    int f = 0, r = 0;
+    public void enqueue(int x) {
+    	q[r++] = x;
+    }
+
+    public int dequeue() { 
+    	if(f==r) return -1;
+        return q[f++];
+    }
+
+    public int peek() { 
+    	if(f==r) return -1;
+        return q[f];
+    }
+}
+
+3. Finding the First Unique Character
+static class StringTask {
+    public int firstUniqChar(String s) {
+	for(int i = 0; i< s.length(); i++){
+        	int count = 0;
+            	for(int j = 0; j< s.length(); j++){
+            		if(s.charAt(i)==s.charAt(j)){
+                		count++;
+                	}
+            	}
+            	if(count==1) return i;
+        }
+        return -1;
+    }
+}
+
+4. Obtaining Hexadecimal Characters   ***
+public static char convertToHexChar(boolean[] bits) {
+    int value = 0;
+    for(int i = 0; i< bits.length; i++){
+    	if(bits[i]) value += Math.pow(2, bits.length-1-i);
+    }
+    if(value > 9) return (char) ('A'+value-10);
+    return (char) ('0'+ value);
+}
+
+5. Sorting Rectangles by Area
+public static int[][] sortRectangles(int[][] rectangles) {
+    for(int i = 0; i< rectangles.length-1; i++){
+    	for(int j = i+1; j< rectangles.length; j++){
+            int area1 = rectangles[i][0]* rectangles[i][1];
+            int area2 = rectangles[j][0]* rectangles[j][1];
+            if(area1>area2){
+            	int[] temp = rectangles[i];
+                rectangles[i] = rectangles[j];
+                rectangles[j] = temp;
+            }
+        }
+    }
+    return rectangles;
+}
+
+6. Maximum Difference Finding
+public static int maxProductDifference(int[] nums) {
+    int n = nums.length;
+    for(int i = 0; i< n-1; i++){
+    	for(int j = i+1; j< n; j++){
+        	if(nums[i]>nums[j]){
+            	int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }
+    }
+    return (nums[n-1]*nums[n-2]) - (nums[0]*nums[1]);
+}
+
+7. ATM - Payment
+static class ATMTask {
+    public String calculateATM(int amount) {
+        String res = "";
+        int[] money = {100, 50, 20, 10, 5, 1};
+        if(amount<=0) return "";
+        for(int m : money){
+        	while(amount>= m){
+                res += m + ",";
+                amount-= m;
+            }
+        }
+        return res.substring(0, res.length()-1);
+    }
+}
+
+8. Token game
+public static int bagOfTokensScore(int[] tokens, int power) {
+    int left = 0, right = tokens.length-1, score = 0, maxscore = 0;
+    for(int i = 0; i< tokens.length-1; i++){
+    	for(int j = i+1; j< tokens.length; j++){
+        	if(tokens[i]> tokens[j]){
+            	int temp = tokens[i];
+                tokens[i] = tokens[j];
+                tokens[j] = temp;
+            }
+        }
+    }
+    if(power< tokens[left]) return 0;
+    while(left<= right){
+    	if(power>= tokens[left]){
+    	    power-=tokens[left];
+            score++;
+            left++;
+            if(maxscore< score) maxscore = score;
+        }
+        else{
+            score--;
+            power+= tokens[right];
+            right--;
+        }
+    }
+    return maxscore;
+} 
+
+9. Bacterial Division
+public static int simulateBacteria(int m, int l, int t) {
+    int say = 1;
+    if(m>= l) return 0;
+    for(int i = 1; i< t+1; i++){
+    	if(i%m == 0) say*= 2;
+    }
+    return say;
+}
+
+10. Bubble sort
+public static void sort(IntTracker[] arr) {
+   for(int i = 0; i< arr.length-1; i++){
+   	for(int j = i+1; j< arr.length; j++){
+    		if(arr[i].getValue()>arr[j].getValue()){
+            		IntTracker temp = arr[i];
+                	arr[i] = arr[j];
+                	arr[j] = temp;
+            	}	
+    	}
+   }
+}
+
+11. Selection sort
+public static void sort(IntTracker[] arr) {
+   for (int i = 0; i < arr.length - 1; i++) {
+       int minIdx = i;
+       for (int j = i + 1; j < arr.length; j++) {
+           if (arr[j].getValue() < arr[minIdx].getValue()) minIdx = j;
+       }
+       IntTracker temp = arr[i];
+       arr[i] = arr[minIdx];
+       arr[minIdx] = temp;
+   }
+}
+
+12. Insertion sort  ***
+public static void sort(IntTracker[] arr) {
+    for (int i = 1; i < arr.length; i++) {
+        int j = i;
+        while (j > 0 && arr[j].getValue() < arr[j - 1].getValue()) {
+            IntTracker temp = arr[j];
+            arr[j] = arr[j - 1];
+            arr[j - 1] = temp;
+            j--;
+        }
+    }
+}
+
+13. Finding the Points Closest to Target
+static class PriorityTask {
+    public List<Integer> findClosest(int[] nums, int k, int target) {
+	PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> Math.abs(a - target) - Math.abs(b - target));
+        for (int num : nums) pq.offer(num);
+        List<Integer> res = new ArrayList<>();
+        for (int i = 0; i < k; i++) {
+		res.add(pq.poll());
+	}
+    return res;
+    }
+}
+
+14. ID Cellular Automation
+public static int[] gameOfLife1D(int[] cells) {
+    int[] newcells = new int[cells.length];
+    newcells[0] = (cells[1] == 1) ? 1 : 0;
+    newcells[cells.length-1] = (cells[cells.length-2]== 1) ? 1 : 0;
+    for(int i = 1; i< cells.length-1; i++){
+		newcells[i] = cells[i-1] ^ cells[i+1];
+    }
+    return newcells;
+}
+
+15. Longest Common Prefix
+static class Task {
+    public String longestCommonPrefix(String[] strs) {
+	String res = strs[0];
+        if(strs == null) return "";
+        for(String s : strs){
+        	while(!s.startsWith(res)){
+            	    res = res.substring(0, res.length()-1);
+                }
+        }
+        return res;
+    }
+}
+
+16. Duplicating Array (with IntTracker)
+public static int[] expandArray(IntTracker nums) {
+    int[] values = new int[0];
+    int start = 0;
+    for(int i = 0; i< nums.size(); i++){
+    	for(int j = 0; j< nums.get(i); j++){
+            values = Arrays.copyOf(values, values.length+1);
+            values[start] = nums.get(i);
+            start++;
+        }
+    }
+    return values;
+}
+
+17. Gas Station
+static class Task {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int start = 0, tank = 0, total = 0;
+        for(int i = 0; i< cost.length; i++){
+            tank += gas[i] - cost[i];
+            total += gas[i] - cost[i];
+            if(tank<0){
+            	start = i+1;
+                tank = 0;
+            }
+        }
+        if(total < 0) return -1;
+        return start;
+    }
+}
+
+18. Finding the Highest-Value Elements
+static class PriorityTask {
+    public List<Integer> findClosest(int[] nums, int k, int target) {
+	PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b-a);
+        for (int num : nums) pq.offer(num);
+        List<Integer> res = new ArrayList<>();
+        for (int i = 0; i < k; i++) {
+		res.add(pq.poll());
+	}
+    return res;
+    }
+}
+
+19. Surviving Person in a Circular Queue
+public static int findTheWinner(int n, int k) {
+    int res = 0;
+    for (int i = 1; i < n+1; i++) {
+        res = (res + k) % i;
+    }
+    return res + 1;
+}
+
+20. Anagram Detection
+static class HashTask {
+    public boolean isAnagram(String s1, String s2) {
+	char[] c1 = s1.toCharArray();
+        char[] c2 = s2.toCharArray();
+        for(int i = 0; i< c1.length-1; i++){
+        	for(int j = i+1; j< c1.length; j++){
+            		if(c1[i]> c1[j]){
+                    		char temp = c1[i];
+                    		c1[i] = c1[j];
+                    		c1[j] = temp;
+                	}
+            	}
+        }
+        for(int i = 0; i< c2.length-1; i++){
+        	for(int j = i+1; j< c2.length; j++){
+            		if(c2[i]> c2[j]){
+                		char temp = c2[i];
+                    		c2[i] = c2[j];
+                    		c2[j] = temp;
+                	}
+            	}
+        }
+        return java.util.Arrays.equals(c1, c2);
+    }
+}
+
+21. Stack: Paratheses Balance
+static class BracketTask {
+    public boolean isBalanced(String s) {
+        int count = 0;
+    	for(char x : s.toCharArray()){
+            if(x == '(') count++;
+            else count--;
+        }
+        if(count==0) return true;
+        return false;
+    }
+}
+
+22. Finding the Median of an Array
+public static double findMedian(int[] arr) {
+    int a  = arr.length;
+    for(int i = 0; i< a-1; i++){
+    	for(int j = i+1; j< a; j++){
+            if(arr[i]> arr[j]){
+            	int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+    if(a%2!=0) return arr[a/2];
+    return (arr[a/2-1]+arr[a/2])/ 2.0;
+}
+
+23. Triangle with Maximum Perimeter
+public static int largestPerimeter(int[] nums) {
+    for(int i = 0; i< nums.length-1; i++){
+    	for(int j = i+1; j< nums.length; j++){
+        	if(nums[i]> nums[j]){
+            	int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }
+    }
+    for(int i = nums.length-1; i>1; i--){
+    	int a = nums[i-2];
+        int b = nums[i-1];
+        int c = nums[i];
+        if(a+b>c){
+        	return a+b+c;
+        }
+    }
+    return 0;
+}
+
+24. Sum of Backward Signals in a Circular Array
+public static int calculateCircularSum(int[] data, int startIndex) {
+    int sum = 0;
+    for (Integer x : data) sum += x;
+    return sum;
+}
+
+25. Teemo Attack
+static class Task {
+    public int findPoisonedDuration(int[] timeSeries, int duration) {
+	int poisonsum = 0;
+        if(timeSeries == null) return 0;
+        for(int i = 1; i< timeSeries.length; i++){
+            int timedif = timeSeries[i] - timeSeries[i-1];
+            if(timedif<duration) poisonsum+= timedif;
+            else poisonsum+= duration;
+        }
+        poisonsum+= duration;
+        return poisonsum;
+    }
+}
+
+26. Finding Words on the Same Keyboard Row
+public static String[] findWords(String[] words) {
+    String row1 = "qwertyuiopQWERTYUIOP";
+    String row2 = "asdfghjklASDFGHJKL";
+    String row3 = "zxcvbnmZXCVBNM";
+    List<String> res = new ArrayList<>();
+    for(String w : words){
+    	if(w.matches("["+ row1 +"]+") || w.matches("["+ row2 +"]+") || w.matches("["+ row3 +"]+")){
+        	res.add(w);
+        }
+    }
+    return res.toArray(new String[0]);
+}
+
+27. Merging Intersecting Segments
+public static int[][] mergeIntervals(int[][] intervals) {
+    if(intervals.length <= 1) return intervals;
+    for(int i = 0; i< intervals.length-1; i++){
+    	for(int j = i+1; j< intervals.length; j++){
+        	if(intervals[i][0]>intervals[j][0]){
+            	    int[] temp = intervals[i];
+                    intervals[i] = intervals[j];
+                    intervals[j] = temp;
+            	}
+        }
+    }
+    List<int[]> res = new ArrayList<>();
+    int[] curr = intervals[0];
+    res.add(curr);
+    for(int[] inter : intervals){
+    	if(curr[1] >= inter[0]) curr[1] = Math.max(inter[1], curr[1]);
+        else {curr = inter; res.add(curr);} 
+    }
+    return res.toArray(new int[res.size()][]);
+}
+
+28. Intersection of Two Arrays   ***
+public static int[] intersection(int[] arr1, int[] arr2) {
+    Set<Integer> res = new HashSet<>();
+    for(int i = 0; i< arr1.length-1; i++){
+    	for(int j = i+1; j< arr1.length; j++){
+        	if(arr1[i]>arr1[j]){
+            	    int temp = arr1[i];
+                    arr1[i] = arr1[j];
+                    arr1[j] = temp;
+            	}
+        }
+    }
+    for(int i = 0; i< arr2.length-1; i++){
+    	for(int j = i+1; j< arr2.length; j++){
+        	if(arr2[i]>arr2[j]){
+            	    int temp = arr2[i];
+                    arr2[i] = arr2[j];
+                    arr2[j] = temp;
+            	}
+        }
+    }
+    int i = 0;
+    int j= 0;
+    while (i < arr1.length && j < arr2.length) {
+        if (arr1[i] == arr2[j]) {
+            res.add(arr1[i]);
+            i++;
+            j++;
+        }
+        else if (arr1[i] < arr2[j]) {
+            i++;
+        }
+        else {
+            j++;
+        }
+    }
+    int[] answer = new int[res.size()];
+    int index = 0;
+    for (Integer num : res) answer[index++] = num;
+    return answer;
+}
+
+29. Validating a Mountain Array
+static class Task {
+    public boolean validMountainArray(int[] arr) {
+	if(arr.length < 3) return false;
+        int i = 0, n =  arr.length;
+        while(i < n-1 && arr[i] < arr[i+1]) i++;
+        if(i==0 || i== n-1) return false;
+        while(i < n-1 && arr[i] > arr[i+1]) i++;
+        return i== n-1;
+    }
+}
+
+30. Caesar Cypher Encryption   ***
+static class Task {
+    public String encrypt(String s, int shift) {
+        String res = "";
+        for(char c : s.toCharArray()){
+            if(c >= 'a' && c<= 'z') res+= (char)((c-'a'+shift)%26 + 'a');
+            else if (c>= 'A' && c<= 'Z') res += (char)((c-'A'+shift)%26 + 'A');
+            else res += c;
+        }
+        return res;
+    }
+}
+
+31. Reversing Word in a String
+public static String reverseWords(String s) {
+    String res = "";
+    String[] words = s.trim().split("\\s+");
+    for(int i = words.length-1; i>= 0; i--){
+    	res+= words[i];
+        if(i>0) res += " ";
+    }
+    return res;
+}
+
+32. Password Combination Generation
+static class SafeTask {
+    public List<String> findCodes(String digits, int length) {
+	List<String> res = new ArrayList<>();
+        generate(digits, length, "", res);
+        return res;
+    }
+
+    private void generate(String digits, int length, String current, List<String> res) {
+    	if(current.length()== length){
+            res.add(current);
+            return;
+        }
+        for(char c : digits.toCharArray()){
+            generate(digits, length, current + c, res);
+        }
+    }
+}
+
+33. Conversion of Roman Numerals
+public static int romanToInt(String s) {
+    int num = 0, prev = 0, ans = 0;
+    for(int i = s.length()-1; i>= 0; i--){
+        char c = s.charAt(i);
+    	if(c == 'I') num = 1;
+        else if(c == 'V') num = 5;
+        else if(c == 'X') num = 10;
+        else if(c == 'L') num = 50;
+        else if(c == 'C') num = 100;
+        else if(c == 'D') num = 500;
+        else if(c == 'M') num = 1000;
+        if(num>= prev) ans+= num;
+    	else ans-= num;
+    	prev = num;
+    }
+    return ans;
+}
+
+34. Text Compression(Run-Length Encoding)   ***
+static class Task {
+    public int compress(char[] chars) {
+	String res = "";
+        int count = 1;
+        for(int i = 0; i< chars.length; i++){
+            if(i< chars.length-1 && chars[i] == chars[i+1]) count++;
+            else{
+            	res += chars[i];
+                if(count > 1) res+= count;
+                count = 1;
+            }
+        }
+        for(int i = 0; i< res.length(); i++){
+        	chars[i] = res.charAt(i);
+        }
+        return res.length();
+    }
+}
+
+35. Generating Pascal Triangle
+static class Task {
+    public List<List<Integer>> generate(int numRows) {
+	List<List<Integer>> res = new ArrayList<>();
+        for(int i = 0; i< numRows; i++){
+            List<Integer> rows = new ArrayList<>();
+            for(int j = 0; j < i+1; j++){
+            	if(j == 0 || j == i) rows.add(1);
+                else rows.add(res.get(i-1).get(j) + res.get(i-1).get(j-1));
+            }
+            res.add(rows);
+        }
+        return res;
+    }
+}
+
+36. Checking a Binary Search Tree(BST)
+public static boolean isValidBST(TreeNode root) {
+    return validate(root, null, null) == 1;
+}
+
+private static int validate(TreeNode node, Integer min, Integer max){
+    if(node == null) return 1;
+    if((min != null && node.val <= min) || (max != null && node.val >= max)) return -1;
+    if(validate(node.left, min, node.val) == -1 || validate(node.right, node.val, max) == -1) return -1;
+    return 1;
+}
+
+37. Balanced Binary Tree
+public static boolean isBalanced(TreeNode root) {
+    return height(root)!=-1;
+}
+
+private static int height(TreeNode node){
+    if(node== null) return 0;
+    int left = height(node.left), right = height(node.right);
+    if(left == -1 || right == -1 || Math.abs(left-right)> 1) return -1;
+    return Math.max(left, right) +1;
+}
+
+38. The height of a Node in a Binary Tree
+public static int getNodeHeight(TreeNode root) {
+    if(root == null) return 0;
+    return 1+ Math.max(getNodeHeight(root.left), getNodeHeight(root.right));
+}
+
+39. Finding the Maximum degree of a general tree
+public static int getMaxDegree(Node root) {
+    if(root == null ) return 0;
+    int max = root.children.size();
+    for(Node child : root.children) max = Math.max(max, getMaxDegree(child));
+    return max;
+}
+
+40. Linked List: Finding the Middle Element
+static class MiddleNodeTask {
+    public int findMiddle(Node head) {
+    	if(head == null) return -1;
+        Node s = head, f = head;
+        while(f!= null && f.next != null){
+            s= s.next;
+            f = f.next.next;
+        }
+        return s.data;
+    }
+}
+
+41. Checking a Full Binary Tree
+public static boolean isFullTree(TreeNode root) {
+    if(root == null) return true;
+    if(root.left == null && root.right == null) return true;
+    if(root.left!= null && root.right != null) return isFullTree(root.left) && isFullTree(root.right);
+    return false;
+}
+
+42. The Depth of a Specific Node in a Binary Tree
+public static int getDepth(TreeNode root, int target) {
+    if(root == null) return -1;
+    if(root.val == target) return 0;
+    int left = getDepth(root.left, target);
+    if(left != -1) return left + 1;
+    int right = getDepth(root.right, target);
+    if(right != -1) return right + 1;
+    return -1;
+}
+
+43. Root-to-leaf Path Sum
+public static boolean hasPathSum(TreeNode root, int targetSum) {
+    if(root == null) return false;
+    if(root.left == null && root.right == null) return root.val == targetSum;
+    return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
+}
+
+44. Restoration of a Unique Travel Route
+public static String[] reconstructItinerary(String[][] tickets) {
+    Map<String,String> m = new HashMap<>();
+    for(String[] x : tickets) m.put(x[0], x[1]);
+    String s = "";
+    for(String k : m.keySet()) if(!m.containsValue(k)) s = k;
+    String[] r = new String[tickets.length + 1];
+    for(int i = 0; s != null; s = m.get(s)) r[i++] = s;
+    return r;
+}
